@@ -15,17 +15,21 @@
 
 ;; RETURN THE FINAL STATE
 (defun get_final_state ()
-	(list 1 2 3 4))
+	(list 1 2 3 4 5 6))
 
 
 ;; RETURN THE INITIAL STATE
 (defun get_initial_state ()
-	(list 4 3 2 1))
+	(list 3 2 6 5 4 1))
 
 
 ;; GENERATE STATES 
 (defun operator (list)
-	(let ((states_list (list (copy-list list) (copy-list list) (copy-list list))))
+	(let ((states_list (make-list (length list))))
+		(loop for i from 0 to (- (length list) 1) do
+			(setf (nth i states_list) (copy-list list))
+		)
+
 		(loop for i from 1 to (- (length list) 1) do
 			(setf (nth i (nth (- i 1) states_list)) (nth 0 list))
 			(setf (nth 0 (nth (- i 1) states_list)) (nth i list))
@@ -70,10 +74,14 @@
 	)
 )
 
+;; ------------------------------
+;;     MAIN FUNCTION
+;; ------------------------------
+
 (defun main ()
 	(setq final_state (get_final_state)) 
 	(setq initial_state (get_initial_state)) 
 	(print (BFS initial_state final_state))
 )
 
-;(main)
+(main)
