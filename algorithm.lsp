@@ -1,5 +1,9 @@
 ;; ------------------------------
-;;         FUNCTIONS
+;;        USEFUL FUNCTIONS
+;; ------------------------------
+
+;; ------------------------------
+;;     ALGORITHM FUNCTIONS
 ;; ------------------------------
 
 ;; RETURN THE FINAL STATE
@@ -13,8 +17,14 @@
 
 ;; Breadth First Search
 (defun BFS (initial final)
+	;; VARIABLES
 	(setq opened (list initial))
-	(print opened)
+	(setq closed (list))
+	(setq result NIL)
+
+	;; LOOP
+	(loop 
+		(when (or (eq result T) (= (length opened) 0)) (return))
 )
 
 (defun main ()
