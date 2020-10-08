@@ -22,9 +22,15 @@
 	(setq closed (list))
 	(setq result NIL)
 
-	;; LOOP
+	;; MAIN LOOP
 	(loop 
-		(when (or (eq result T) (= (length opened) 0)) (return))
+		(when (or (eq result T) (= (length opened) 0)) (return)) ;; RETURN CONDITION
+		(setq current (car opened))
+		(if (equal current final) 
+			(setq result T)
+			(print current)
+		)
+	)
 )
 
 (defun main ()
