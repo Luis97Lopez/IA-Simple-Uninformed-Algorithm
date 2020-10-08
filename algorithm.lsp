@@ -23,6 +23,12 @@
 	(list 3 2 6 5 4 1))
 
 
+;; RETURN IF IT'S THE CORRECT STATE
+(defun is_final_state(state)
+	(equal state (get_final_state))
+)
+
+
 ;; GENERATE STATES 
 (defun operator (list)
 	(let ((states_list (make-list (length list))))
@@ -40,7 +46,7 @@
 
 
 ;; Breadth First Search
-(defun BFS (initial final)
+(defun BFS (initial)
 	;; VARIABLES
 	(setq opened (list initial))
 	(setq closed (list))
@@ -59,7 +65,7 @@
 
 		(print current)
 		
-		(if (equal current final) 
+		(if (is_final_state current) 
 			(setq result T)
 			(progn
 				(setq closed (append closed (list current)))
@@ -79,9 +85,8 @@
 ;; ------------------------------
 
 (defun main ()
-	(setq final_state (get_final_state)) 
 	(setq initial_state (get_initial_state)) 
-	(print (BFS initial_state final_state))
+	(print (BFS initial_state))
 )
 
 (main)
