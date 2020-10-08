@@ -25,15 +25,14 @@
 
 ;; GENERATE STATES 
 (defun operator (list)
-	(let ((states_list (list (copy-list list) (copy-list list) (copy-list list) (copy-list list))))
-		(loop for i from 0 to (- (length list) 1) do
-			(let ((j (mod (+ i 1) 4)))
-				(setf (nth (mod (+ i 0) 4) (nth 0 states_list)) (nth j list))
-				(setf (nth (mod (+ i 1) 4) (nth 1 states_list)) (nth j list))
-				(setf (nth (mod (+ i 2) 4) (nth 2 states_list)) (nth j list))
-				(setf (nth (mod (+ i 3) 4) (nth 3 states_list)) (nth j list))
-			)
-		)
+	(let ((states_list (list (copy-list list) (copy-list list) (copy-list list))))
+		(setf (nth 1 (nth 0 states_list)) (nth 0 list))
+		(setf (nth 2 (nth 1 states_list)) (nth 0 list))
+		(setf (nth 3 (nth 2 states_list)) (nth 0 list))
+
+		(setf (nth 0 (nth 0 states_list)) (nth 1 list))
+		(setf (nth 0 (nth 1 states_list)) (nth 2 list))
+		(setf (nth 0 (nth 2 states_list)) (nth 3 list))
 		states_list
 	)
 )
@@ -50,14 +49,17 @@
 	(loop 
 
 
-		(when (or (eq result T) (= (length opened) 0)) (return)) ;; RETURN CONDITION
-		(setq current (car opened))
-		(setq opened (cdr opened))
+		(when (or (eq result T) (= (length opened) 0)) (return result)) ;; RETURN CONDITION
+
 
 
 		(print '(----------))
 		(print opened)
 		(print closed)
+
+		(setq current (car opened))
+		(setq opened (cdr opened))
+
 		(print current)
 		
 		(if (equal current final) 
