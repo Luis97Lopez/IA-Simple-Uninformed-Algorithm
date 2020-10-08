@@ -1,4 +1,15 @@
 ;; ------------------------------
+;;     USEFUL FUNCTIONS
+;; ------------------------------
+
+(defun is_list_in_queue (_list queue)
+	(loop for l in queue do
+		(when (equal l _list)
+			(return T))
+	)
+)
+
+;; ------------------------------
 ;;     ALGORITHM FUNCTIONS
 ;; ------------------------------
 
@@ -37,13 +48,28 @@
 
 	;; MAIN LOOP
 	(loop 
+
+
 		(when (or (eq result T) (= (length opened) 0)) (return)) ;; RETURN CONDITION
 		(setq current (car opened))
+		(setq opened (cdr opened))
+
+
+		(print '(----------))
+		(print opened)
+		(print closed)
+		(print current)
+		
 		(if (equal current final) 
 			(setq result T)
 			(progn
-				(setq closed (append closed current))
-				
+				(setq closed (append closed (list current)))
+				(setq new_states (operator current))
+				(loop for new in new_states do
+					(if (and 	(not (is_list_in_queue new opened)) 
+							(not (is_list_in_queue new closed)))
+						(setq opened (append opened (list new))))
+				)
 			)
 		)
 	)
@@ -52,8 +78,7 @@
 (defun main ()
 	(setq final_state (get_final_state)) 
 	(setq initial_state (get_initial_state)) 
-	(BFS initial_state final_state)
-	;;(print (operator initial_state))
+	(print (BFS initial_state final_state))
 )
 
 (main)
