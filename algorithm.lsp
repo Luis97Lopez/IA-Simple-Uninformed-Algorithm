@@ -26,13 +26,10 @@
 ;; GENERATE STATES 
 (defun operator (list)
 	(let ((states_list (list (copy-list list) (copy-list list) (copy-list list))))
-		(setf (nth 1 (nth 0 states_list)) (nth 0 list))
-		(setf (nth 2 (nth 1 states_list)) (nth 0 list))
-		(setf (nth 3 (nth 2 states_list)) (nth 0 list))
-
-		(setf (nth 0 (nth 0 states_list)) (nth 1 list))
-		(setf (nth 0 (nth 1 states_list)) (nth 2 list))
-		(setf (nth 0 (nth 2 states_list)) (nth 3 list))
+		(loop for i from 1 to (- (length list) 1) do
+			(setf (nth i (nth (- i 1) states_list)) (nth 0 list))
+			(setf (nth 0 (nth (- i 1) states_list)) (nth i list))
+		)
 		states_list
 	)
 )
@@ -47,11 +44,7 @@
 
 	;; MAIN LOOP
 	(loop 
-
-
 		(when (or (eq result T) (= (length opened) 0)) (return result)) ;; RETURN CONDITION
-
-
 
 		(print '(----------))
 		(print opened)
@@ -83,4 +76,4 @@
 	(print (BFS initial_state final_state))
 )
 
-(main)
+;(main)
