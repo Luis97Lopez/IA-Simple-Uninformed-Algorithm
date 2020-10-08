@@ -13,14 +13,17 @@
 
 
 ;; GENERATE STATES 
-(defun operator (list) 
-	(let ((temp (copy-list list)))
-		(loop for i from 0 to (- (length temp) 1) do
+(defun operator (list)
+	(let ((states_list (list (copy-list list) (copy-list list) (copy-list list) (copy-list list))))
+		(loop for i from 0 to (- (length list) 1) do
 			(let ((j (mod (+ i 1) 4)))
-				(setf (nth i temp) (nth j list))
+				(setf (nth (mod (+ i 0) 4) (nth 0 states_list)) (nth j list))
+				(setf (nth (mod (+ i 1) 4) (nth 1 states_list)) (nth j list))
+				(setf (nth (mod (+ i 2) 4) (nth 2 states_list)) (nth j list))
+				(setf (nth (mod (+ i 3) 4) (nth 3 states_list)) (nth j list))
 			)
 		)
-		temp
+		states_list
 	)
 )
 
@@ -49,7 +52,8 @@
 (defun main ()
 	(setq final_state (get_final_state)) 
 	(setq initial_state (get_initial_state)) 
-	;;(BFS initial_state final_state)
+	(BFS initial_state final_state)
+	;;(print (operator initial_state))
 )
 
 (main)
